@@ -11,10 +11,16 @@ public class UIManager : MonoBehaviour
     public GameObject PanelGameOver;
     public Text TextTapToPlay;
     public Text TextCoin;
+    public Slider SliderSpeedBoost;
+    public int NumberOfTimeToDie;
+    public bool BuyBack;
+    public GameObject ButtonBuyBack;
+    public Text TextDistance;
 
     void Awake()
     {
         Time.timeScale = 0f;
+        BuyBack = false;
     }
 
     private IEnumerator EffectTextTapToPlay()
@@ -53,5 +59,40 @@ public class UIManager : MonoBehaviour
     public void SetCoin(int _value)
     {
         TextCoin.text = _value.ToString();
+    }
+
+    public void SetEnemySpeedBoost(float _value)
+    {
+        SliderSpeedBoost.value = _value;
+    }
+
+    public void ShowGameOver()
+    {
+        PanelGameOver.SetActive(true);
+        Time.timeScale = 0f;
+        NumberOfTimeToDie++;
+        PlayerPrefs.SetInt("CountDie", NumberOfTimeToDie);
+    }
+
+    public void OnClickButtonBuyBack()
+    {
+        if(GameManager.Coins >= 30 && !BuyBack)
+        {
+            Time.timeScale = 1f;
+            PanelGameOver.SetActive(false);
+            GameManager.Instance.ReSpawnPlayer();
+            GameManager.Coins -= 30;
+            SetCoin(GameManager.Coins);
+            BuyBack = true;
+        }
+        else
+        {
+            ButtonBuyBack.SetActive(false);
+        }
+    }
+
+    public void SetDistance(float _value)
+    {
+        TextDistance.text = _value.ToString()+ "M";
     }
 }

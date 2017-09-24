@@ -9,7 +9,7 @@ public class Limit : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            FindObjectOfType<PlayerHealth>().Die();
+            FindObjectOfType<PlayerHealth>().PlayerDie();
         }
     }
 }

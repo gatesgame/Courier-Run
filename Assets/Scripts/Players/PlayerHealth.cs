@@ -5,15 +5,24 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
 
-    //die
-    public void Die()
+    private Animator AnimatorPlayer;
+
+    void Start()
     {
-        Destroy(gameObject);
+        AnimatorPlayer = GetComponent<Animator>();
     }
 
-    //play animation die
-    public void AnimationDie()
+    //die
+    public void PlayerDie()
     {
+        AnimatorPlayer.SetBool("Die", true);
+        StartCoroutine(DelayToDestroy());
+    }
 
+    private IEnumerator DelayToDestroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        FindObjectOfType<UIManager>().ShowGameOver();
+        Destroy(gameObject);
     }
 }

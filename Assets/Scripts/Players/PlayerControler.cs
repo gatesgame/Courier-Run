@@ -26,6 +26,7 @@ public class PlayerControler : MonoBehaviour
     private float CurrentTimeToStartSpeedBoost;
     private float CurrentTimeBoostDuration;
     private bool IsJump;
+    private UIManager UiManager;
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class PlayerControler : MonoBehaviour
         MicroInput = FindObjectOfType<MicrophoneInput>();
         AnimatorPlayer = GetComponent<Animator>();
         SpeedUp = FindObjectOfType<Movement>();
+        UiManager = FindObjectOfType<UIManager>();
     }
 
     void Update()
@@ -92,13 +94,14 @@ public class PlayerControler : MonoBehaviour
     {
         CurrentTimeWait += Time.deltaTime;
         //neu thoi...
-        if (MicroInput.Loudness >= 0.1f && CurrentTimeWait >= CoolDownSpeedBoost)
+        if (MicroInput.Loudness >= 0.1f && CurrentTimeWait >= CoolDownSpeedBoost && GameManager.Energys >= 33f)
         {
             //thơi gian thổi chạy
             CurrentTimeToStartSpeedBoost += Time.deltaTime;
             //neu thoi dai... 
             if (CurrentTimeToStartSpeedBoost >= TimeToStartSpeedBoost && !IsSpeedBoost)
             {
+                GameManager.Energys -= 33f;
                 CurrentTimeWait = 0f;
                 StartCoroutine(CoSpeedBoost());
             }
@@ -126,7 +129,14 @@ public class PlayerControler : MonoBehaviour
         {
             GameManager.Coins++;
             PlayerPrefs.SetInt("Coins", GameManager.Coins);
-            FindObjectOfType<UIManager>().SetCoin(GameManager.Coins);
+            UiManager.SetCoin(GameManager.Coins);
+            Destroy(col.gameObject);
+        }
+
+        if (col.gameObject.tag == "Energy")
+        {
+            GameManager.Energys++;
+            UiManager.SetEnemySpeedBoost(GameManager.Energys);
             Destroy(col.gameObject);
         }
     }
