@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerCoin : MonoBehaviour {
-
+public class SpawnerCoin : MonoBehaviour
+{
     public float TimeMinToSpawnCoin;
     public float TimeMaxToSpawnCoin;
     public float MinPosSpawnCoin;
@@ -26,6 +26,4 @@ public class SpawnerCoin : MonoBehaviour {
         Instantiate(Coin, posSpawnCoin, Quaternion.identity);
         StartCoroutine(SpawnCoin());
     }
-    
-
 }

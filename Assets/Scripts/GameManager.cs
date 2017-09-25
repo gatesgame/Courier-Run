@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance = null;
     public static UIManager UiManager;
     public static int Coins;
     public static float Energys;
     public static float Distance;
     public GameObject Player;
+    public float HighScore;
 
     private float Timer;
 
@@ -31,13 +31,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        ReSpawnPlayer();
         UiManager = FindObjectOfType<UIManager>();
         Coins = PlayerPrefs.GetInt("Coins");
         UiManager.SetCoin(Coins);
-        Energys = 0f;
-        UiManager.SetEnemySpeedBoost(Energys);
+        Energys = 33f;
+        UiManager.SetEnergySpeedBoost(Energys);
         Distance = 0;
         UiManager.SetDistance(Distance);
+        HighScore = PlayerPrefs.GetFloat("HighScore");
     }
 
     void Update()
@@ -62,5 +64,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    public void SaveHighScore()
+    {
+        if (Distance > HighScore)
+        {
+            PlayerPrefs.SetFloat("HighScore", Distance);
+        }
+    }
 }

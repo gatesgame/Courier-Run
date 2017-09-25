@@ -102,6 +102,7 @@ public class PlayerControler : MonoBehaviour
             if (CurrentTimeToStartSpeedBoost >= TimeToStartSpeedBoost && !IsSpeedBoost)
             {
                 GameManager.Energys -= 33f;
+                UiManager.SetEnergySpeedBoost(GameManager.Energys);
                 CurrentTimeWait = 0f;
                 StartCoroutine(CoSpeedBoost());
             }
@@ -136,7 +137,7 @@ public class PlayerControler : MonoBehaviour
         if (col.gameObject.tag == "Energy")
         {
             GameManager.Energys++;
-            UiManager.SetEnemySpeedBoost(GameManager.Energys);
+            UiManager.SetEnergySpeedBoost(GameManager.Energys);
             Destroy(col.gameObject);
         }
     }
