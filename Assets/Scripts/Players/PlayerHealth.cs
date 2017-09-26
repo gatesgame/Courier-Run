@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator DelayToDestroy()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         FindObjectOfType<UIManager>().ShowGameOver();
         Destroy(gameObject);
     }

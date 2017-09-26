@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        NeverSleepScreen();
         ReSpawnPlayer();
         UiManager = FindObjectOfType<UIManager>();
         Coins = PlayerPrefs.GetInt("Coins");
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        CalculateDistance();
+        StartCoroutine(CoCalculateDistance());
     }
 
     public void ReSpawnPlayer()
@@ -52,8 +53,9 @@ public class GameManager : MonoBehaviour
         Instantiate(Player, transform.position, transform.rotation);
     }
 
-    private void CalculateDistance()
+    private IEnumerator CoCalculateDistance()
     {
+        yield return new WaitForSeconds(3f);
         //S= v*t
         Timer += Time.deltaTime;
         if (Timer >= 1f)
@@ -70,5 +72,10 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("HighScore", Distance);
         }
+    }
+
+    private void NeverSleepScreen()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 }

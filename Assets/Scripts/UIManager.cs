@@ -10,16 +10,35 @@ public class UIManager : MonoBehaviour
     public GameObject PanelGameOver;
     public Text TextCoin;
     public Slider SliderSpeedBoost;
-    public int NumberOfTimeToDie;
+    public int NumberOfTimeDieToShowAd;
     public bool BuyBack;
     public GameObject ButtonBuyBack;
     public Text TextDistance;
     public Text TextDistanceResult;
     public Text TextHighDistanceResult;
+    public GameObject ButtonSettingAudioOn;
+    public GameObject ButtonSettingAudioOff;
+
+    private int NumberOfTimeToDie;
 
     void Awake()
     {
         BuyBack = false;
+        NumberOfTimeToDie = PlayerPrefs.GetInt("Die");
+    }
+
+    void Update()
+    {
+        if (PlayerPrefs.GetString("Audio") == "On")
+        {
+            ButtonSettingAudioOn.SetActive(true);
+            ButtonSettingAudioOff.SetActive(false);
+        }
+        else
+        {
+            ButtonSettingAudioOn.SetActive(false);
+            ButtonSettingAudioOff.SetActive(true);
+        }
     }
 
     public void OnClickButtonPause()
@@ -37,6 +56,12 @@ public class UIManager : MonoBehaviour
     public void OnClickButtonRePlay()
     {
         SceneManager.LoadScene("GamePlay1");
+        Time.timeScale = 1f;
+    }
+
+    public void OnClickMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
     }
 
@@ -58,7 +83,8 @@ public class UIManager : MonoBehaviour
         SetTextDistanceResult();
         Time.timeScale = 0f;
         NumberOfTimeToDie++;
-        PlayerPrefs.SetInt("CountDie", NumberOfTimeToDie);
+        PlayerPrefs.SetInt("Die", NumberOfTimeToDie);
+        ShowUnityAd();
     }
 
     public void OnClickButtonBuyBack()
@@ -86,5 +112,31 @@ public class UIManager : MonoBehaviour
     public void SetTextDistanceResult()
     {
         TextDistanceResult.text = GameManager.Distance.ToString() + "M";
+    }
+
+    private void ShowUnityAd()
+    {
+        if (PlayerPrefs.GetInt("Die") >= NumberOfTimeDieToShowAd)
+        {
+            UnityAdManager.Instance.ShowVideoAd();
+            NumberOfTimeToDie = 0;
+            PlayerPrefs.SetInt("Die", 0);
+        }
+    }
+
+    public void OnClickSettingAudio()
+    {
+        if (PlayerPrefs.GetString("Audio") == "On")
+        {
+            ButtonSettingAudioOn.SetActive(false);
+            ButtonSettingAudioOff.SetActive(true);
+            PlayerPrefs.SetString("Audio", "Off");
+        }
+        else
+        {
+            ButtonSettingAudioOn.SetActive(true);
+            ButtonSettingAudioOff.SetActive(false);
+            PlayerPrefs.SetString("Audio", "On");
+        }
     }
 }
