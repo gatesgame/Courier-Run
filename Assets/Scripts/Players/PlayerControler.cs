@@ -60,6 +60,7 @@ public class PlayerControler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGround)
         {
             RigidbodyPlayer.velocity = new Vector2(RigidbodyPlayer.velocity.x, JumpHight);
+            AudioManager.Instance.PlayAudioJump();
         }
 
         //double jump
@@ -67,6 +68,7 @@ public class PlayerControler : MonoBehaviour
         {
             RigidbodyPlayer.velocity = new Vector2(RigidbodyPlayer.velocity.x, JumpHight);
             IsDoubleJump = true;
+            AudioManager.Instance.PlayAudioJump();
         }
     }
 
@@ -80,6 +82,7 @@ public class PlayerControler : MonoBehaviour
         {
             RigidbodyPlayer.velocity = new Vector2(RigidbodyPlayer.velocity.x, JumpHight);
             TimeToDelayMic = 0f;
+            AudioManager.Instance.PlayAudioJump();
         }
 
         //mic controll double jump
@@ -87,6 +90,7 @@ public class PlayerControler : MonoBehaviour
         {
             RigidbodyPlayer.velocity = new Vector2(RigidbodyPlayer.velocity.x, JumpHight);
             IsDoubleJump = true;
+            AudioManager.Instance.PlayAudioJump();
         }
     }
 
@@ -101,6 +105,7 @@ public class PlayerControler : MonoBehaviour
             //neu thoi dai... 
             if (CurrentTimeToStartSpeedBoost >= TimeToStartSpeedBoost && !IsSpeedBoost)
             {
+                AudioManager.Instance.PlayAudioSpeedBoost();
                 GameManager.Energys -= 33f;
                 UiManager.SetEnergySpeedBoost(GameManager.Energys);
                 CurrentTimeWait = 0f;
@@ -132,6 +137,7 @@ public class PlayerControler : MonoBehaviour
             PlayerPrefs.SetInt("Coins", GameManager.Coins);
             UiManager.SetCoin(GameManager.Coins);
             Destroy(col.gameObject);
+            AudioManager.Instance.PlayGetCoinAudio();
         }
 
         if (col.gameObject.tag == "Energy")
@@ -139,6 +145,7 @@ public class PlayerControler : MonoBehaviour
             GameManager.Energys++;
             UiManager.SetEnergySpeedBoost(GameManager.Energys);
             Destroy(col.gameObject);
+            AudioManager.Instance.PlayAudiogetEnergy();
         }
     }
 

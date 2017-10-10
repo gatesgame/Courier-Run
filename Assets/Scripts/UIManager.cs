@@ -33,11 +33,13 @@ public class UIManager : MonoBehaviour
         {
             ButtonSettingAudioOn.SetActive(true);
             ButtonSettingAudioOff.SetActive(false);
+            AudioManager.Instance.AudioSource.mute = false;
         }
         else
         {
             ButtonSettingAudioOn.SetActive(false);
             ButtonSettingAudioOff.SetActive(true);
+            AudioManager.Instance.AudioSource.mute = true;
         }
     }
 
@@ -130,13 +132,13 @@ public class UIManager : MonoBehaviour
         {
             ButtonSettingAudioOn.SetActive(false);
             ButtonSettingAudioOff.SetActive(true);
-            PlayerPrefs.SetString("Audio", "Off");
+            AudioManager.Instance.SettingAudio();
         }
         else
         {
             ButtonSettingAudioOn.SetActive(true);
             ButtonSettingAudioOff.SetActive(false);
-            PlayerPrefs.SetString("Audio", "On");
+            AudioManager.Instance.SettingAudio();
         }
     }
 }

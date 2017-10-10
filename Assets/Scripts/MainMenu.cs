@@ -26,11 +26,13 @@ public class MainMenu : MonoBehaviour
         {
             ButtonSettingAudioOn.SetActive(true);
             ButtonSettingAudioOff.SetActive(false);
+            AudioManager.Instance.AudioSource.mute = false;
         }
         else
         {
             ButtonSettingAudioOn.SetActive(false);
             ButtonSettingAudioOff.SetActive(true);
+            AudioManager.Instance.AudioSource.mute = true;
         }
     }
 

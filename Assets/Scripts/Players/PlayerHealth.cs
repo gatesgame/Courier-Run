@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
     //die
     public void PlayerDie()
     {
+        AudioManager.Instance.PlayDieAudio();
         AnimatorPlayer.SetBool("Die", true);
         StartCoroutine(DelayToDestroy());
     }
